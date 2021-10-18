@@ -30,7 +30,6 @@ namespace froggerProject
         private void InitializeComponent()
         {
             this.startButton = new System.Windows.Forms.Button();
-            this.exitButton = new System.Windows.Forms.Button();
             this.titelLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -46,19 +45,6 @@ namespace froggerProject
             this.startButton.Text = "Start";
             this.startButton.UseVisualStyleBackColor = false;
             this.startButton.Click += new System.EventHandler(this.startButton_Click);
-            // 
-            // exitButton
-            // 
-            this.exitButton.BackColor = System.Drawing.Color.YellowGreen;
-            this.exitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.exitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.exitButton.Location = new System.Drawing.Point(3, 3);
-            this.exitButton.Name = "exitButton";
-            this.exitButton.Size = new System.Drawing.Size(169, 50);
-            this.exitButton.TabIndex = 2;
-            this.exitButton.Text = "Exit";
-            this.exitButton.UseVisualStyleBackColor = false;
-            this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
             // 
             // titelLabel
             // 
@@ -78,7 +64,6 @@ namespace froggerProject
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::froggerProject.Properties.Resources.flipedRoad;
             this.Controls.Add(this.titelLabel);
-            this.Controls.Add(this.exitButton);
             this.Controls.Add(this.startButton);
             this.Name = "MenuScreen";
             this.Size = new System.Drawing.Size(923, 777);
@@ -89,7 +74,6 @@ namespace froggerProject
         #endregion
 
         private System.Windows.Forms.Button startButton;
-        private System.Windows.Forms.Button exitButton;
         private System.Windows.Forms.Label titelLabel;
     }
 }

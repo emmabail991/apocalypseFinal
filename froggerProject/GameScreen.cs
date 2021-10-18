@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
+using System.Media;
+    
 
 namespace froggerProject
 {
@@ -14,14 +17,14 @@ namespace froggerProject
     {
 
         //player1 button control keys
-        Boolean leftArrowDown, rightArrowDown, upArrowDown, downArrowDown;
+        Boolean leftArrowDown, rightArrowDown, upArrowDown, downArrowDown, spaceDown;
         Boolean keyDown = false;
 
         //create a list to hold a column of boxes   
         List<Box> boxes = new List<Box>();
 
         //starting x positions for boxes
-        int yDown = 210;
+       int yDown = 210;
         int gap = 120;
 
         //pattern values
@@ -46,14 +49,19 @@ namespace froggerProject
         /// </summary>
         public void OnStart()
         {
+            // clear boxes on start
+            boxes.Clear();
+
+            gameTime = 0;
+
+            // spawn box paths
             CreateBox(yDown);
             CreateBox(yDown + gap);
             CreateBox(yDown + gap);
             CreateBox(yDown + gap + gap);
             CreateBox(yDown + gap + gap + gap);
 
-
-
+            //hero
             hero = new Box(this.Width / 2 - 15, this.Height - 120, 30, 4, new SolidBrush(Color.Goldenrod));
         }
 
@@ -84,10 +92,15 @@ namespace froggerProject
                 case Keys.Down:
                     downArrowDown = true;
                     break;
+
+                //restart 
+                case Keys.Space:
+                    spaceDown = true;
+                    break;
+
+
             }
         }
-
-        
 
         private void GameScreen_KeyUp(object sender, KeyEventArgs e)
         {
@@ -95,7 +108,7 @@ namespace froggerProject
             {
                 case Keys.Left:
                     leftArrowDown = false;
-                    keyDown = false;
+                   keyDown = false;
                     break;
                 case Keys.Right:
                     rightArrowDown = false;
@@ -103,11 +116,15 @@ namespace froggerProject
                     break;
                 case Keys.Up:
                     upArrowDown = false;
-                    keyDown = false;
+                  keyDown = false;
                     break;
                 case Keys.Down:
                     downArrowDown = false;
                     keyDown = false;
+                    break;
+                    //resatrt key
+                    case Keys.Space:
+                    spaceDown = false;
                     break;
             }
         }
@@ -119,26 +136,33 @@ namespace froggerProject
             gameTime++;
 
             //move hero
-            if (keyDown == false && leftArrowDown)
+            if (keyDown == false && leftArrowDown  )
             {
                 hero.Move("left");
                 keyDown = true;
             }
-            else if (keyDown == false && rightArrowDown)
+            else if (keyDown == false && rightArrowDown  )
             {
                 hero.Move("right");
                 keyDown = true;
             }
-            else if (keyDown == false && upArrowDown)
+            else if (keyDown == false && upArrowDown )
             {
                 hero.Move("up");
                 keyDown = true;
             }
-            else if (keyDown == false && downArrowDown)
+            else if (keyDown == false && downArrowDown )
             {
                 hero.Move("down");
                 keyDown = true;
             }
+
+            if(spaceDown==true)
+            {
+                OnStart();
+                
+            }
+
 
             //update location of all boxes  
             foreach (Box b in boxes)
@@ -183,41 +207,60 @@ namespace froggerProject
 
                 newBoxCounter = 0;
             }
-
-
-
+            //display time
            timeOutPutLabel.Text = $"{gameTime/15}";
 
             //check for collisions between hero and boxes
-
             foreach (Box b in boxes)
             {
                 if (hero.Collision(b))
                 {
+                    // play crash sound
+                    SoundPlayer player = new SoundPlayer(Properties.Resources.crashSound);
+
+                    player.Play();
+
                     gameTimer.Enabled = false;
 
+                    Thread.Sleep(1000);
+
+                    //change screens
                     Form f = this.FindForm();
                     f.Controls.Remove(this);
                     GameOverScreen over = new GameOverScreen();
                     f.Controls.Add(over);
+                    break;       
                 }
             }
 
-            if(hero.y == 0)
+            //show win screen if hero reaches top of the screen
+            if (hero.y <0)
             {
+                gameTimer.Enabled = false; ;
+
+                Form f = this.FindForm();
+                f.Controls.Remove(this);
+                WinScreen win = new WinScreen();
+                f.Controls.Add(win);
+            }
+
+            //add gameover screen if time hits 20 
+            if (gameTime/15 > 20)
+            {
+                gameTimer.Enabled = false;
+                Thread.Sleep(1000);
                 Form f = this.FindForm();
                 f.Controls.Remove(this);
                 GameOverScreen over = new GameOverScreen();
                 f.Controls.Add(over);
+                
             }
+            
             Refresh();
         }
 
 
-        private void restartButton_Click(object sender, EventArgs e)
-        {
-            Application.Restart();
-        }
+      
 
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {

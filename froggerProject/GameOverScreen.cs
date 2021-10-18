@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Media;
 
 namespace froggerProject
 {
@@ -15,10 +16,24 @@ namespace froggerProject
         public GameOverScreen()
         {
             InitializeComponent();
-            if (GameScreen.gameTime > 20)
+
+            //play loose sound
+            SoundPlayer player = new SoundPlayer(Properties.Resources.gameOverSound);
+
+            player.Play();
+
+            if (GameScreen.gameTime/15 >= 20)
             {
+                //display out of time message if out of time 
                 titelLabel.Text = "OUT OF TIME";
                 gameScoreLabel.Text="Time limmet is 20 seconds";
+            }
+            else
+            {
+                //displya mess if crashed into box
+                titelLabel.Text = "GAME OVER";
+                gameScoreLabel.Text = "You Died";
+ 
             }
         }
 
@@ -26,6 +41,7 @@ namespace froggerProject
 
         private void menuButton_Click(object sender, EventArgs e)
         {
+            //change screen to menue screen 
             Form f = this.FindForm();
             f.Controls.Remove(this);
             MenuScreen ms = new MenuScreen();
@@ -33,3 +49,4 @@ namespace froggerProject
         }
     }
 }
+;

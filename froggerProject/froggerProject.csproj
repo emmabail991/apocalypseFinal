@@ -120,5 +120,17 @@
   <ItemGroup>
     <None Include="Resources\flipedRoad.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\crashSound.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\winSound.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gameOverSound.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\menuSound.wav" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

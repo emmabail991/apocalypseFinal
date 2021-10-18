@@ -30,23 +30,10 @@ namespace froggerProject
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.restartButton = new System.Windows.Forms.Button();
             this.timeOutPutLabel = new System.Windows.Forms.Label();
             this.gameTimer = new System.Windows.Forms.Timer(this.components);
+            this.restarLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // restartButton
-            // 
-            this.restartButton.BackColor = System.Drawing.Color.YellowGreen;
-            this.restartButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.restartButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.restartButton.Location = new System.Drawing.Point(0, 0);
-            this.restartButton.Name = "restartButton";
-            this.restartButton.Size = new System.Drawing.Size(169, 50);
-            this.restartButton.TabIndex = 0;
-            this.restartButton.Text = "Restart";
-            this.restartButton.UseVisualStyleBackColor = false;
-            this.restartButton.Click += new System.EventHandler(this.restartButton_Click);
             // 
             // timeOutPutLabel
             // 
@@ -65,13 +52,22 @@ namespace froggerProject
             this.gameTimer.Interval = 50;
             this.gameTimer.Tick += new System.EventHandler(this.gameTimer_Tick);
             // 
+            // restarLabel
+            // 
+            this.restarLabel.AutoSize = true;
+            this.restarLabel.Location = new System.Drawing.Point(3, 0);
+            this.restarLabel.Name = "restarLabel";
+            this.restarLabel.Size = new System.Drawing.Size(116, 13);
+            this.restarLabel.TabIndex = 2;
+            this.restarLabel.Text = "Press Space to Restart";
+            // 
             // GameScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::froggerProject.Properties.Resources.flipedRoad;
+            this.Controls.Add(this.restarLabel);
             this.Controls.Add(this.timeOutPutLabel);
-            this.Controls.Add(this.restartButton);
             this.DoubleBuffered = true;
             this.Name = "GameScreen";
             this.Size = new System.Drawing.Size(923, 777);
@@ -79,13 +75,13 @@ namespace froggerProject
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.GameScreen_KeyUp);
             this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.GameScreen_PreviewKeyDown);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Button restartButton;
         private System.Windows.Forms.Label timeOutPutLabel;
         private System.Windows.Forms.Timer gameTimer;
+        private System.Windows.Forms.Label restarLabel;
     }
 }
