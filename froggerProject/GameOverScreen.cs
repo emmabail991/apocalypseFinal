@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Media;
+using System.Security.Cryptography.X509Certificates;
 
 namespace froggerProject
 {
@@ -22,30 +23,23 @@ namespace froggerProject
 
             player.Play();
 
-            if (GameScreen.gameTime/15 >= 20)
-            {
-                //display out of time message if out of time 
-                titelLabel.Text = "OUT OF TIME";
-                gameScoreLabel.Text="Time limmet is 20 seconds";
-            }
-            else
-            {
+             
+             
                 //displya mess if crashed into box
                 titelLabel.Text = "GAME OVER";
-                gameScoreLabel.Text = "You Died";
+                gameScoreLabel.Text = $"your score was {gameScoreLabel}";
  
-            }
+            
         }
+
+        
 
         
 
         private void menuButton_Click(object sender, EventArgs e)
         {
             //change screen to menue screen 
-            Form f = this.FindForm();
-            f.Controls.Remove(this);
-            MenuScreen ms = new MenuScreen();
-            f.Controls.Add(ms);
+            Form1.ChangeScreen(this, new MenuScreen());
         }
     }
 }

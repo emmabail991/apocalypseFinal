@@ -31,6 +31,7 @@ namespace froggerProject
         {
             this.startButton = new System.Windows.Forms.Button();
             this.titelLabel = new System.Windows.Forms.Label();
+            this.exitButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // startButton
@@ -58,11 +59,24 @@ namespace froggerProject
             this.titelLabel.Text = "FROGGER";
             this.titelLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // exitButton
+            // 
+            this.exitButton.BackColor = System.Drawing.Color.YellowGreen;
+            this.exitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.exitButton.Location = new System.Drawing.Point(14, 700);
+            this.exitButton.Name = "exitButton";
+            this.exitButton.Size = new System.Drawing.Size(140, 41);
+            this.exitButton.TabIndex = 4;
+            this.exitButton.Text = "Exit";
+            this.exitButton.UseVisualStyleBackColor = false;
+            this.exitButton.Click += new System.EventHandler(this.exitButton_Click_1);
+            // 
             // MenuScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::froggerProject.Properties.Resources.flipedRoad;
+            this.Controls.Add(this.exitButton);
             this.Controls.Add(this.titelLabel);
             this.Controls.Add(this.startButton);
             this.Name = "MenuScreen";
@@ -75,5 +89,6 @@ namespace froggerProject
 
         private System.Windows.Forms.Button startButton;
         private System.Windows.Forms.Label titelLabel;
+        private System.Windows.Forms.Button exitButton;
     }
 }

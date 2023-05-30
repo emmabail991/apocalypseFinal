@@ -132,5 +132,14 @@
   <ItemGroup>
     <None Include="Resources\menuSound.wav" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\carLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\carRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\frog.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

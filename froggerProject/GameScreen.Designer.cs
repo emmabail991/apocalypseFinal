@@ -33,6 +33,8 @@ namespace froggerProject
             this.timeOutPutLabel = new System.Windows.Forms.Label();
             this.gameTimer = new System.Windows.Forms.Timer(this.components);
             this.restarLabel = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.scoreLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // timeOutPutLabel
@@ -61,11 +63,33 @@ namespace froggerProject
             this.restarLabel.TabIndex = 2;
             this.restarLabel.Text = "Press Space to Restart";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "label1";
+            // 
+            // scoreLabel
+            // 
+            this.scoreLabel.AutoSize = true;
+            this.scoreLabel.BackColor = System.Drawing.Color.Transparent;
+            this.scoreLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.scoreLabel.ForeColor = System.Drawing.Color.Red;
+            this.scoreLabel.Location = new System.Drawing.Point(821, 52);
+            this.scoreLabel.Name = "scoreLabel";
+            this.scoreLabel.Size = new System.Drawing.Size(0, 29);
+            this.scoreLabel.TabIndex = 4;
+            // 
             // GameScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::froggerProject.Properties.Resources.flipedRoad;
+            this.Controls.Add(this.scoreLabel);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.restarLabel);
             this.Controls.Add(this.timeOutPutLabel);
             this.DoubleBuffered = true;
@@ -83,5 +107,7 @@ namespace froggerProject
         private System.Windows.Forms.Label timeOutPutLabel;
         private System.Windows.Forms.Timer gameTimer;
         private System.Windows.Forms.Label restarLabel;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label scoreLabel;
     }
 }

@@ -11,20 +11,32 @@ namespace froggerProject
     {
         public int x, y, size, speed;
         public SolidBrush brushColour;
+        
 
-        public Box(int _x, int _y, int _size, int _speed, SolidBrush _brushColor)
+
+        public Box(int _x, int _y, int _size, int _speed)
         {
             x = _x;
             y = _y;
             size = _size;
             speed = _speed;
-            brushColour = _brushColor;
+            
         }
 
-        public void Move()
+        public void MoveRight()
         {
             x += speed;
         }
+
+        public void MoveLeft()
+        {
+            x -= speed;
+        }
+
+
+
+
+
 
         public void Move(string direction)
         {
