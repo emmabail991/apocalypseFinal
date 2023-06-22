@@ -7,14 +7,14 @@ using System.Drawing;
 
 namespace froggerProject
 {
-    class Box
+    class zombie
     {
         public int x, y, size, speed;
         public SolidBrush brushColour;
         
 
 
-        public Box(int _x, int _y, int _size, int _speed)
+        public zombie(int _x, int _y, int _size, int _speed)
         {
             x = _x;
             y = _y;
@@ -42,23 +42,16 @@ namespace froggerProject
         {
             if (direction == "left")
             {
-                x -= 40;
+                x -= 4;
             }
             else if (direction == "right")
             {
-                x += 40;
+                x += 4;
             }
-            if (direction == "up")
-            {
-                y -= 40;
-            }
-            else if (direction == "down")
-            {
-                y += 40;
-            }
+            
         }
 
-        public bool Collision(Box b)
+        public bool Collision(zombie b)
         {
             Rectangle thisRec = new Rectangle(x, y, size, size);
             Rectangle boxRec = new Rectangle(b.x, b.y, b.size, b.size);

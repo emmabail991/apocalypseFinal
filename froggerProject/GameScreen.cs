@@ -20,17 +20,32 @@ namespace froggerProject
         Boolean leftArrowDown, rightArrowDown, upArrowDown, downArrowDown, spaceDown;
         Boolean keyDown = false;
 
+        //play image direction
+        Boolean LookRight = true;
+        Boolean lookLeft = false;
+
         //create a list to hold a column of boxes   
-        List<Box> boxLeft = new List<Box>();
-        List<Box> boxRight = new List<Box>();
+        List<zombie> boxLeft = new List<zombie>();
+        List<zombie> boxRight = new List<zombie>();
+        List<bullet> bulletList = new List<bullet>();
+         
+        //gmae brushes
+        SolidBrush redBrush = new SolidBrush(Color.Red);
 
         //starting x positions for boxes
-        int yDown = 130 ;
-        int gap = 140;
-
-        int speed = 10;
+        int ground = 350;
+         
+        //player values
+        int waveSpawn = 30;
+        int life = 5;
+        int shotCounter;
+        int shotLimit = 30;
+        int speed = 4;
+        
         public static int score;
 
+        //bullet values
+        static int bulletWidth, bulletHeight, bulletSpeed;
 
 
         //pattern values
@@ -39,8 +54,8 @@ namespace froggerProject
         //game time left
         public static int gameTime = 0;
 
-        //hero values
-        Box hero;
+        //hero 
+        zombie hero;
 
         Random randGen = new Random();
 
@@ -59,38 +74,45 @@ namespace froggerProject
             // clear boxes on start
             boxLeft.Clear();
             boxRight.Clear();
-
             gameTime = 0;
 
-            // spawn box paths
-            CreateLeftBox(yDown);
-            CreateRightBox(yDown + gap);
-            CreateLeftBox(yDown + gap + gap);
-            CreateRightBox(yDown + gap + gap + gap);
+             
 
             //hero
-            hero = new Box(this.Width / 2 - 15, this.Height - 120, 30, 4);
+            hero = new zombie(this.Width / 2 - 15, this.Height - 90, 70, 4);
 
-            
+            bulletWidth = 10;
+            bulletHeight = 5;
+            bulletSpeed = 50;
         }
 
         //box spawn
         public void CreateLeftBox(int y)
         {
             //Box(x, y, size, speed, brush)
-            Box left = new Box(0, y, 50, speed);
+            zombie left = new zombie(0, y, 50, speed);
             boxLeft.Add(left);
         }
 
         public void CreateRightBox(int y)
         {
             //Box(x, y, size, speed, brush)
-            Box right = new Box(this.Width, y, 50, speed);
+            zombie right = new zombie(this.Width, y, 50, speed);
             boxRight.Add(right);
 
         }
 
-        
+        public void MakeBullet()
+        {
+            //play hun sound
+            SoundPlayer player = new SoundPlayer(Properties.Resources.shot);
+            player.Play();
+
+            //spawn bullets
+            bullet bullet = new bullet(hero.x + 22, hero.y + 20, bulletWidth, bulletHeight,bulletSpeed);
+            bulletList.Add(bullet);
+            shotCounter++;
+        }
 
         private void GameScreen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
@@ -98,22 +120,17 @@ namespace froggerProject
             {
                 case Keys.Left:
                     leftArrowDown = true;
+                    lookLeft = true;
+                    LookRight = false;
                     break;
                 case Keys.Right:
                     rightArrowDown = true;
+                    lookLeft = false;
+                    LookRight = true;
                     break;
-                case Keys.Up:
-                    upArrowDown = true;
-                    break;
-                case Keys.Down:
-                    downArrowDown = true;
-                    break;
-
-                //restart 
                 case Keys.Space:
                     spaceDown = true;
                     break;
-
 
             }
         }
@@ -124,30 +141,22 @@ namespace froggerProject
             {
                 case Keys.Left:
                     leftArrowDown = false;
-                    keyDown = false;
+                     
                     break;
                 case Keys.Right:
                     rightArrowDown = false;
-                    keyDown = false;
+                     
                     break;
-                case Keys.Up:
-                    upArrowDown = false;
-                    keyDown = false;
-                    break;
-                case Keys.Down:
-                    downArrowDown = false;
-                    keyDown = false;
-                    break;
-                //resatrt key
                 case Keys.Space:
                     spaceDown = false;
                     break;
             }
         }
 
-
         private void gameTimer_Tick(object sender, EventArgs e)
         {
+            //ammo left and mag size
+            ammoLeftoutput.Text = $"{shotCounter}";
             newBoxCounter++;
             gameTime++;
 
@@ -155,170 +164,143 @@ namespace froggerProject
             if (keyDown == false && leftArrowDown)
             {
                 hero.Move("left");
-                keyDown = true;
+                 
             }
             else if (keyDown == false && rightArrowDown)
             {
                 hero.Move("right");
-                keyDown = true;
+                 
             }
-            else if (keyDown == false && upArrowDown)
+            //bullet shoot
+            if (spaceDown == true && shotCounter < shotLimit)
             {
-                hero.Move("up");
-                keyDown = true;
+                shotCounter = 0;
+                MakeBullet();
+                 
+                
             }
-            else if (keyDown == false && downArrowDown)
+            //bullet shoot direction
+            foreach (bullet bullet in bulletList)
             {
-                hero.Move("down");
-                keyDown = true;
+                if(lookLeft == true)
+                {
+                    bullet.MoveBulletLeft(bulletSpeed);
+                }
+                if (LookRight == true)
+                {
+                    bullet.MoveBulletRight(bulletSpeed);
+                }
             }
-
-            if (spaceDown == true)
-            {
-                OnStart();
-
-            }
-
 
             //update location of all boxes  
-            foreach (Box left in boxLeft)
+            foreach (zombie left in boxLeft)
             {
                 left.MoveRight();
             }
 
-            foreach (Box Right in boxRight)
+            foreach (zombie Right in boxRight)
             {
                 Right.MoveLeft();
             }
 
-
-            //remove box if it has gone of screen
-            if (boxLeft[0].x > this.Width)
-            {
-                boxLeft.RemoveAt(0);
-            }
-
-            if (boxRight[0].x < 0)
-            {
-                boxRight.RemoveAt(0);
-            }
-
-
-
             //randomly spawn boxes
-            newBoxCounter = randGen.Next(8, 17);
+            newBoxCounter = randGen.Next(0, waveSpawn);
 
 
             //add new box if it is time
-            if (newBoxCounter == 10)
+            if (newBoxCounter == 1)
             {
-                CreateLeftBox(yDown);
+                CreateLeftBox(ground);
 
                 newBoxCounter = 0;
 
             }
 
-            if (newBoxCounter == 12)
+            if (newBoxCounter == 2)
             {
-                CreateRightBox(yDown + gap);
+                CreateRightBox(ground);
 
                 newBoxCounter = 0;
 
             }
 
-            if (newBoxCounter == 14)
-            {
-                CreateLeftBox(yDown + gap + gap);
+            
 
-                newBoxCounter = 0;
-
-            }
-
-            if (newBoxCounter == 16)
-            {
-                CreateRightBox(yDown + gap + gap + gap);
-
-                newBoxCounter = 0;
-
-            }
-
-            //display time
-            timeOutPutLabel.Text = $"{gameTime / 15}";
-
-            //check for collisions between hero and boxes
-            foreach (Box b in boxLeft)
+            //check for collisions between hero and boxes and play sounds if player is hit
+            foreach (zombie b in boxLeft)
             {
                 if (hero.Collision(b))
                 {
-                    // play crash sound
-                    SoundPlayer player = new SoundPlayer(Properties.Resources.crashSound);
+                    SoundPlayer player = new SoundPlayer(Properties.Resources.hurt);
 
                     player.Play();
-
-                    gameTimer.Enabled = false;
-
+                    life--;
+                    healthOutputLabel.Text = $"♥{life}";
                     Thread.Sleep(1000);
 
-                    //change screens
-                    Form1.ChangeScreen(this, new GameOverScreen());
-                    break;
                 }
-            }
-
-            foreach (Box b in boxRight)
-            {
-                if (hero.Collision(b))
+                if (life == 0)
                 {
-                    // play crash sound
-                    SoundPlayer player = new SoundPlayer(Properties.Resources.crashSound);
-
-                    player.Play();
-
-                    gameTimer.Enabled = false;
-
-                    Thread.Sleep(1000);
-
-                    //change screens
                     Form1.ChangeScreen(this, new GameOverScreen());
                 }
             }
 
-            //Speed up cars and reset frog and show score 
-            if (hero.y < 0)
+            foreach (zombie b in boxRight)
             {
-                score++;
-                speed += 2;
+                if (hero.Collision(b))
+                {
+                    SoundPlayer player = new SoundPlayer(Properties.Resources.hurt);
 
-                hero = new Box(this.Width / 2 - 15, this.Height - 120, 30, 4);
+                    player.Play();
+                    life--;
+                    healthOutputLabel.Text = $"♥{life}";
+                    Thread.Sleep(1000);
 
-                scoreLabel.Text = $"{score}";
+                }
+                // go to death screen if player is hit 
+                if (life == 0)
+                {
+                    SoundPlayer player = new SoundPlayer(Properties.Resources.gameOverSound);
+
+                    player.Play();
+                    gameTimer.Enabled = false;
+                    Form1.ChangeScreen(this, new GameOverScreen());
+                }
             }
-
-            if(score == 10)
-            {
-                Form1.ChangeScreen(this, new WinScreen());
-            }
-
 
             Refresh();
         }
-        
 
 
+        //paint bullets and players
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
             //draw boxes to screen
-            foreach (Box b in boxRight)
+            foreach (zombie b in boxRight)
             {
-                e.Graphics.DrawImage(Properties.Resources.carLeft, b.x, b.y, b.size, b.size);
+                e.Graphics.DrawImage(Properties.Resources.kingZombie, b.x, b.y, b.size, b.size);
+
             }
 
-            foreach (Box b in boxLeft)
+            foreach (zombie b in boxLeft)
             {
-                e.Graphics.DrawImage(Properties.Resources.carRight, b.x, b.y, b.size, b.size);
+                e.Graphics.DrawImage(Properties.Resources.kingZombie, b.x, b.y, b.size, b.size);
             }
 
-            e.Graphics.DrawImage(Properties.Resources.frog, hero.x, hero.y, hero.size, hero.size);
+            if (lookLeft == true)
+            {
+                e.Graphics.DrawImage(Properties.Resources.Shot_2, hero.x, hero.y, hero.size, hero.size);
+            }
+            else if(LookRight == true) 
+            {
+                e.Graphics.DrawImage(Properties.Resources.Shot_1, hero.x, hero.y, hero.size, hero.size);
+            }
+            
+
+            foreach (bullet b in bulletList)
+            {
+                e.Graphics.FillRectangle(redBrush, b.x, b.y, b.width, b.height);
+            }
         }
     }
 

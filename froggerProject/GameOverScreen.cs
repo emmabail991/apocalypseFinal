@@ -22,24 +22,32 @@ namespace froggerProject
             SoundPlayer player = new SoundPlayer(Properties.Resources.gameOverSound);
 
             player.Play();
-
-             
-             
-                //displya mess if crashed into box
-                titelLabel.Text = "GAME OVER";
-                gameScoreLabel.Text = $"your score was {gameScoreLabel}";
- 
-            
         }
-
-        
-
-        
 
         private void menuButton_Click(object sender, EventArgs e)
         {
             //change screen to menue screen 
             Form1.ChangeScreen(this, new MenuScreen());
+        }
+
+        private void menuButtton_Click(object sender, EventArgs e)
+        {
+            Form1.ChangeScreen(this, new MenuScreen());
+        }
+
+        private void playagainButton_Click(object sender, EventArgs e)
+        {
+            Form1.ChangeScreen(this, new GameScreen());
+        }
+
+        private void scoreboardButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

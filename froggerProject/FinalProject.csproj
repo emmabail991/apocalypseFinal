@@ -46,7 +46,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Box.cs" />
+    <Compile Include="bullet.cs" />
+    <Compile Include="leaderboard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="leaderboard.Designer.cs">
+      <DependentUpon>leaderboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="powerUps.cs" />
+    <Compile Include="zombie.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,11 +81,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WinScreen.cs">
+    <Compile Include="InstructionsScreen.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="WinScreen.Designer.cs">
-      <DependentUpon>WinScreen.cs</DependentUpon>
+    <Compile Include="InstructionsScreen.Designer.cs">
+      <DependentUpon>InstructionsScreen.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -87,6 +95,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GameScreen.resx">
       <DependentUpon>GameScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="leaderboard.resx">
+      <DependentUpon>leaderboard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MenuScreen.resx">
       <DependentUpon>MenuScreen.cs</DependentUpon>
@@ -101,8 +112,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="WinScreen.resx">
-      <DependentUpon>WinScreen.cs</DependentUpon>
+    <EmbeddedResource Include="InstructionsScreen.resx">
+      <DependentUpon>InstructionsScreen.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -140,6 +151,57 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\frog.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\puoprle zombie.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\backround.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Shot_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Deathbackround.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GameScreenBackround.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\kingZombie.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ShotSoldiershotgun.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\beastZombie.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ICON.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Shot_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\beastZombie2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fast zombie.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\normalZombie.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\shot.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hurt.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\loose-sound.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\instructions.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
